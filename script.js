@@ -37,8 +37,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add click event listeners to tab links
     tabLinks.forEach(link => {
+        // Handle both click and touch events for better mobile support
         link.addEventListener('click', function(e) {
             e.preventDefault();
+            e.stopPropagation();
+            const tabId = this.getAttribute('data-tab');
+            showTab(tabId);
+            
+            // Update URL hash without scrolling
+            history.pushState(null, null, `#${tabId}`);
+        });
+        
+        // Add touch event support for mobile
+        link.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             const tabId = this.getAttribute('data-tab');
             showTab(tabId);
             
@@ -65,75 +78,40 @@ document.addEventListener('DOMContentLoaded', function() {
         showTab('about'); // Default to about tab
     }
 
+    // Mobile hamburger menu functionality
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
 
-    // Mobile menu toggle (if needed for smaller screens)
-    const createMobileMenu = () => {
-        if (window.innerWidth <= 768) {
-            const nav = document.querySelector('.navigation');
-            const navMenu = document.querySelector('.nav-menu');
+    if (mobileMenuToggle && navMenu) {
+        mobileMenuToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             
-            if (!document.querySelector('.mobile-menu-toggle')) {
-                const toggleButton = document.createElement('button');
-                toggleButton.className = 'mobile-menu-toggle';
-                toggleButton.innerHTML = '☰';
-                toggleButton.style.cssText = `
-                    display: block;
-                    background: none;
-                    border: none;
-                    font-size: 1.5rem;
-                    padding: 1rem;
-                    cursor: pointer;
-                    color: #333;
-                `;
-                
-                nav.insertBefore(toggleButton, navMenu);
-                
-                toggleButton.addEventListener('click', () => {
-                    navMenu.classList.toggle('mobile-open');
-                });
-            }
-        }
-    };
+            // Toggle menu visibility
+            navMenu.classList.toggle('mobile-open');
+            mobileMenuToggle.classList.toggle('active');
+        });
 
-    // Add mobile menu styles
-    const mobileStyle = document.createElement('style');
-    mobileStyle.textContent = `
-        @media (max-width: 768px) {
-            .mobile-menu-toggle {
-                display: block !important;
-            }
-            
-            .nav-menu {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                padding: 1rem 0;
-            }
-            
-            .nav-menu.mobile-open {
-                display: flex;
-            }
-            
-            .nav-menu li {
-                margin: 0.5rem 0;
-            }
-        }
-        
-        @media (min-width: 769px) {
-            .mobile-menu-toggle {
-                display: none !important;
-            }
-        }
-    `;
-    document.head.appendChild(mobileStyle);
+        // Close menu when clicking on a tab link (mobile)
+        tabLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    navMenu.classList.remove('mobile-open');
+                    mobileMenuToggle.classList.remove('active');
+                }
+            });
+        });
 
-    // Initialize mobile menu
-    createMobileMenu();
-    window.addEventListener('resize', createMobileMenu);
+        // Close menu when clicking outside (mobile)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 && !mobileMenuToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('mobile-open');
+                mobileMenuToggle.classList.remove('active');
+            }
+        });
+    }
+
+
 
     // Add loading animation
     document.body.style.opacity = '0';
