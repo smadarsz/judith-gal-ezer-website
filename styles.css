@@ -103,10 +103,10 @@ body {
     opacity: 0.9;
 }
 
-.university-logo .logo {
+/* .university-logo .logo {
     height: 80px;
     filter: brightness(0) invert(1);
-}
+} */
 
 /* Navigation Styles */
 .navigation {
