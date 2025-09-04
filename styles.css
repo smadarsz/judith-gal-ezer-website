@@ -408,12 +408,12 @@ body {
     padding: 0.5rem 0.75rem;
     border-radius: 6px;
     transition: all 0.3s ease;
-    border-left: 3px solid #059669;
+    border-left: 3px solid #3b82f6;
 }
 
 .award-item.featured {
-    border-left-color: #dc2626;
-    background: linear-gradient(135deg, #fef2f2 0%, #f8fafc 100%);
+    border-left-color: #3b82f6;
+    background: #f8fafc;
 }
 
 .award-item:hover {
@@ -507,8 +507,8 @@ body {
 }
 
 .publication-item.highlighted {
-    border-left-color: #dc2626;
-    background: linear-gradient(135deg, #fef2f2 0%, white 100%);
+    border-left-color: #3b82f6;
+    background: white;
 }
 
 .publication-item:hover {
