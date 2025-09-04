@@ -696,23 +696,19 @@ body {
 }
 
 .pub-list {
-    display: grid;
-    gap: 0.5rem;
+    list-style: none;
 }
 
 .pub-item {
-    background: white;
-    padding: 0.6rem 0.8rem;
-    border-radius: 5px;
-    border-left: 3px solid #3b82f6;
-    line-height: 1.4;
-    font-size: 0.85rem;
-    transition: all 0.2s ease;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #e2e8f0;
+    color: #4b5563;
+    line-height: 1.6;
+    font-size: 0.9rem;
 }
 
-.pub-item:hover {
-    transform: translateX(3px);
-    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.1);
+.pub-item:last-child {
+    border-bottom: none;
 }
 
 .pub-note {
