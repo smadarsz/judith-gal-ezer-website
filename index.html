@@ -8,17 +8,19 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Live reload: development only -->
     <script>
-      (function() {
-        var lastMod = null;
-        setInterval(function() {
-          fetch('/livereload-check')
-            .then(function(r) { return r.text(); })
-            .then(function(ts) {
-              if (lastMod && ts !== lastMod) location.reload();
-              lastMod = ts;
-            }).catch(function(){});
-        }, 800);
-      })();
+      if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        (function() {
+          var lastMod = null;
+          setInterval(function() {
+            fetch('/livereload-check')
+              .then(function(r) { return r.text(); })
+              .then(function(ts) {
+                if (lastMod && ts !== lastMod) location.reload();
+                lastMod = ts;
+              }).catch(function(){});
+          }, 800);
+        })();
+      }
     </script>
 </head>
 <body>
